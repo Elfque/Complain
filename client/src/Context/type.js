@@ -1,0 +1,20 @@
+// AUTHENTICATION
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAILED = "REGISTER_FAILED";
+export const AUTH_FAILED = "AUTH_FAILED";
+export const LOGOUT = "LOGOUT";
+export const USER_LOADED = "USER_LOADED";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+// ALERT
+export const ADD_ALERT = "ADD_ALERT";
+export const CLEAR_ALERT = "CLEAR_ALERT";
+
+// COURSES
+export const CREATE_COURSE = "CREATE_COURSE";
+export const DELETE_COURSE = "ADD_COURSE";
+export const EDIT_COURSE = "EDIT_COURSE";
+export const GET_COURSES = "GET_COURSES";
+export const GET_COURSE = "GET_COURSE";
