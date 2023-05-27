@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import axios from "axios";
@@ -8,13 +8,22 @@ const SignIn = () => {
 
   const navigate = useNavigate();
   const authCon = useContext(AuthContext);
-  const { authError } = authCon;
+  const { authError, authSuccess, loadUser, isAuthenticated } = authCon;
   const changing = (e) =>
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
 
+  useEffect(() => {
+    loadUser();
+
+    setTimeout(() => {
+      if (isAuthenticated) {
+        navigate("/");
+      }
+    }, 2000);
+  }, []);
+
   const registerUse = async (e) => {
     e.preventDefault();
-
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -23,12 +32,14 @@ const SignIn = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/user",
+        "http://localhost:4000/api/auth",
         userDetails,
         config
       );
+
       if (res.data.msg === "Success") {
-        navigate("/signin");
+        authSuccess(res);
+        navigate("/");
       }
     } catch (error) {
       authError(error);
@@ -56,7 +67,9 @@ const SignIn = () => {
             onChange={changing}
           />
           <div className="forgot text-[12px] text-end">Forgot Password?</div>
-          <button className="sign_btn">Login</button>
+          <button type="submit" className="sign_btn">
+            Login
+          </button>
           <div className="dont">
             Don't have an account?{" "}
             <Link to={"/signup"} className="text-greeny">

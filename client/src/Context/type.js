@@ -16,5 +16,5 @@ export const CLEAR_ALERT = "CLEAR_ALERT";
 export const CREATE_COURSE = "CREATE_COURSE";
 export const DELETE_COURSE = "ADD_COURSE";
 export const EDIT_COURSE = "EDIT_COURSE";
-export const GET_COURSES = "GET_COURSES";
-export const GET_COURSE = "GET_COURSE";
+export const GET_COMPLAINS = "GET_COMPLAINS";
+export const GET_COMPLAIN = "GET_COMPLAIN";

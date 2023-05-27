@@ -6,6 +6,7 @@ import axios from "axios";
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
     email: "",
+    adminLevel: 3,
     password: "",
     password1: "",
   });
@@ -32,7 +33,7 @@ const SignUp = () => {
         userDetails,
         config
       );
-
+      console.log(res);
       if (res.data.msg === "Success") {
         navigate("/");
       }

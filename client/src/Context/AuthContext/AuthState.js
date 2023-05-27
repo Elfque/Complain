@@ -2,32 +2,90 @@ import { useReducer } from "react";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
 import setAuthToken from "../../utils/SetAuthToken";
-import { AUTH_FAILED, LOGOUT, USER_LOADED, LOGIN_SUCCESS } from "../type";
+import {
+  AUTH_FAILED,
+  LOGOUT,
+  USER_LOADED,
+  LOGIN_SUCCESS,
+  GET_COMPLAINS,
+  GET_COMPLAIN,
+} from "../type";
+import axios from "axios";
 
 const AuthState = (prop) => {
   const initialState = {
     user: null,
     token: localStorage.getItem("token"),
     isAuthenticated: false,
+    complains: [],
+    complain: {},
   };
 
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
+  // GET USERS COMPLAINS
+  const getComplains = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/complains");
+
+      dispatch({ type: GET_COMPLAINS, payload: res.data });
+    } catch (error) {
+      console.log("failing");
+      console.log(error.response.data.msg);
+    }
+  };
+
+  // GET ONE COMPLAIN
+  const getComplain = async (id) => {
+    try {
+      const res = await axios.get(`http://localhost:4000/api/complains/${id}`);
+
+      dispatch({ type: GET_COMPLAIN, payload: res.data });
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
+  // SEND MESSAGE
+  const sendMessage = async (id, formData) => {
+    if (formData.messageText.trim() === "") {
+      alert("Input cannot be empty");
+      return;
+    }
+
+    try {
+      const res = await axios.patch(
+        `http://localhost:4000/api/complains/${id}`,
+        formData
+      );
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
+  // GET ADMIN COMPLAIN
+  const getAdminComplains = async () => {
+    try {
+      const res = await axios.get("http://localhost:4000/api/adminComplains");
+
+      dispatch({ type: GET_COMPLAINS, payload: res.data });
+    } catch (error) {
+      console.log(error.response.data.msg);
+    }
+  };
+
   const loadUser = async () => {
-    if (localStorage.getItem("token")) {
+    if (state.token) {
       setAuthToken(localStorage.getItem("token"));
     }
 
-    // try {
-    //   const res = await axios.get("http://localhost:4000/api/auth", {
-    //     headers: {
-    //       authorize: localStorage.getItem("token"),
-    //     },
-    //   });
-    //   dispatch({ type: USER_LOADED, payload: res.data });
-    // } catch (err) {
-    //   dispatch({ type: AUTH_FAILED });
-    // }
+    try {
+      const res = await axios.get("http://localhost:4000/api/auth");
+
+      dispatch({ type: USER_LOADED, payload: res.data });
+    } catch (err) {
+      dispatch({ type: AUTH_FAILED });
+    }
   };
 
   // REGISTER/LOGIN FAILED
@@ -47,11 +105,17 @@ const AuthState = (prop) => {
   const values = {
     token: state.token,
     user: state.user,
+    complains: state.complains,
+    complain: state.complain,
     isAuthenticated: state.isAuthenticated,
     authSuccess,
     authError,
     loadUser,
     logOutUser,
+    getAdminComplains,
+    getComplains,
+    getComplain,
+    sendMessage,
   };
 
   return (

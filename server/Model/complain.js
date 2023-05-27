@@ -1,18 +1,30 @@
 const mongoose = require("mongoose");
 
-const UsersSchema = mongoose.Schema(
+const ComplainSchema = mongoose.Schema(
   {
-    userName: {
-      type: String,
-      required: true,
-    },
-    complain: {
+    complainText: {
       type: String,
       required: true,
       unique: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    messages: {
+      type: Array,
+      default: [],
+    },
+    complainant: {
+      type: String,
+      required: true,
+    },
+    level: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("user", UsersSchema);
+module.exports = mongoose.model("complain", ComplainSchema);

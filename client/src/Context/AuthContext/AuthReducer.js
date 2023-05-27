@@ -6,11 +6,11 @@ import {
   LOGOUT,
   USER_LOADED,
   CLEAR_ERRORS,
+  GET_COMPLAINS,
 } from "../type";
 
 export default (state, action) => {
   switch (action.type) {
-    // case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -34,7 +34,6 @@ export default (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
         user: action.payload.user,
       };
       break;
@@ -53,6 +52,12 @@ export default (state, action) => {
         error: null,
       };
       break;
+
+    case GET_COMPLAINS:
+      return {
+        ...state,
+        complain: action.payload,
+      };
 
     default:
       return state;
