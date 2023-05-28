@@ -20,6 +20,7 @@ const SignIn = () => {
         navigate("/");
       }
     }, 2000);
+    // eslint-disable-next-line
   }, []);
 
   const registerUse = async (e) => {

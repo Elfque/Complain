@@ -7,6 +7,8 @@ import ComplainForm from "./components/layout/ComplainForm";
 import Messages from "./components/layout/Messages";
 import AdminDashboard from "./components/layout/AdminDashboard";
 import AddAdmin from "./components/layout/AddAdmin";
+import Student from "./components/layout/Student";
+import Confirm from "./components/layout/Confirm";
 
 function App() {
   return (
@@ -20,7 +22,9 @@ function App() {
             <Route exact path="/makeacomplain" element={<ComplainForm />} />
             <Route exact path="/complain/:id" element={<Messages />} />
             <Route exact path="/admin" element={<AdminDashboard />} />
+            <Route exact path="/student" element={<Student />} />
             <Route exact path="/addadmin" element={<AddAdmin />} />
+            <Route exact path="/confirm" element={<Confirm />} />
           </Routes>
         </div>
       </Router>

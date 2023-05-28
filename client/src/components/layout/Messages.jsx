@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import SmallMessages from "./SmallMessages";
 
@@ -20,7 +20,9 @@ const Messages = () => {
   useEffect(() => {
     loadUser();
 
-    setTimeout(() => getComplain(id), 1000);
+    getComplain(id);
+
+    // eslint-disable-next-line
   }, []);
 
   const submit = (e) => {
@@ -35,34 +37,24 @@ const Messages = () => {
   };
 
   return (
-    <div className="w-4/5 mx-auto">
+    <div className="w-4/5 mx-auto h-[100vh] overflow-hidden">
       <Navbar />
-      <div className="flex justify-center gap-20 mt-28">
-        <div className="btns">
-          <button className="make bg-greeny text-white py-2 text-sm w-40 block mb-6">
-            Add Administrator
-          </button>
-        </div>
-        <div className="main_message max-w-[500px] h-[70vh] relative">
-          <div className="top rounded-t-md bg-greeny h-16 p-2 text-sm text-white">
+      <div className="flex justify-center gap-20 mt-28 h-[90vh]">
+        {user && user.adminLevel < 2 ? (
+          <div className="btns">
+            <button className="make bg-greeny text-white py-2 text-sm w-40 block mb-6">
+              <Link to={"/addadmin"}>Add Administrator</Link>
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
+        <div className="main_message w-[500px] sm:max-w-[400px] h-[70vh] relative grid grid-rows-6">
+          <div className="top rounded-t-md bg-greeny p-2 text-sm text-white h-full">
             <div className="issue">{complain && complain.complainText}</div>
           </div>
-          <div className="messages mt-4">
-            {/* <div>
-              <div className="sent  text-[11px] w-3/5 mb-4 bg-greeny p-2 rounded-[10px] text-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-                esse aperiam vero quae laborum qui deleniti maiores incidunt ex
-                iusto.
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <div className="receive text-[11px] w-3/5 mb-4 bg-greeny/10 p-2 rounded-[10px] text-black">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-                esse aperiam vero quae laborum qui deleniti maiores incidunt ex
-                iusto.
-              </div>
-            </div> */}
-            {complain.messages ? (
+          <div className="messages px-3 bg-whity h-full row-span-4">
+            {complain.messages && complain.messages.length > 0 ? (
               complain.messages.map((mess, idx) => (
                 <SmallMessages
                   message={mess}

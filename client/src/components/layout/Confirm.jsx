@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Confirm = () => {
   return (
     <div className="confirm text-center p-10">
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center bg-greeny w-20 h-20 rounded-full mx-auto mb-4">
         <svg
           width="60"
           height="43"
@@ -23,9 +23,9 @@ const Confirm = () => {
 
       <div className="text-2xl font-semibold">Successful</div>
       <div className="text-greeny text-sm my-8">
-        You have successfully added an admin
+        You have successfully added a new administrator
       </div>
-      <button>
+      <button className="bg-greeny text-white py-2 px-8">
         <Link to={"/admin"}>Complete</Link>
       </button>
     </div>

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import AuthContext from "../../Context/AuthContext/AuthContext";
+import { Link } from "react-router-dom";
 
 const ComplainForm = () => {
   const authCon = useContext(AuthContext);
@@ -14,6 +15,7 @@ const ComplainForm = () => {
 
   useEffect(() => {
     loadUser();
+    // eslint-disable-next-line
   }, []);
 
   const changing = (e) =>
@@ -47,10 +49,10 @@ const ComplainForm = () => {
       <div className="h-full flex items-start mt-20 justify-center gap-16">
         <div className="btns">
           <button className="make bg-greeny text-white py-2 text-sm w-40 block mb-6">
-            Make a Complain
+            <Link to={"/makeacomplain"}>Make a Complain</Link>
           </button>
           <button className="check_feedback bg-greeny/20 text-black py-2 text-sm w-40 block mb-6">
-            Check Feedback
+            <Link to={"/student"}>Check Feedback</Link>
           </button>
         </div>
         <form

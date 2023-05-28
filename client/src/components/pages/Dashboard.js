@@ -16,11 +16,12 @@ const Dashboard = () => {
       }
 
       if (user) {
-        if (user.adminLevel > 2) navigate("/makeacomplain");
+        if (user.adminLevel > 2) navigate("/student");
         else navigate("/admin");
         return;
       }
     }, 2000);
+    // eslint-disable-next-line
   }, []);
 
   // return (

@@ -50,10 +50,7 @@ const AuthState = (prop) => {
   // SEND MESSAGE
   const sendMessage = async (id, formData) => {
     try {
-      const res = await axios.patch(
-        `http://localhost:4000/api/complains/${id}`,
-        formData
-      );
+      await axios.patch(`http://localhost:4000/api/complains/${id}`, formData);
 
       getComplain(id);
     } catch (error) {
@@ -65,6 +62,7 @@ const AuthState = (prop) => {
   const getAdminComplains = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/adminComplains");
+      console.log("admin", res);
 
       dispatch({ type: GET_COMPLAINS, payload: res.data });
     } catch (error) {

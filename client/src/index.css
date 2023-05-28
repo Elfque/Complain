@@ -21,11 +21,14 @@ a {
 }
 
 .inp {
-  @apply block w-[100%] my-3 sm:my-4 py-[10px] px-3 rounded-lg outline-none border text-sm;
+  @apply block w-full my-3 sm:my-4 py-[10px] px-3 rounded-lg outline-none border text-sm;
 }
 
 .form_border {
   @apply sm:border sm:border-greyey sm:p-10 text-center rounded-[30px] w-fit;
+}
+.form_border.add_admin {
+  @apply text-start rounded-md;
 }
 
 .sign_btn {
