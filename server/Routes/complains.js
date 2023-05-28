@@ -30,17 +30,18 @@ router.patch("/:id", middle, async (req, res) => {
   const { id } = req.params;
 
   try {
-    let complain = await Complain.findById(id);
-
-    const newMessages = [
-      ...complain.message,
-      { messageText, sender: req.user.id },
-    ];
-
-    complain.message = newMessages;
-    await complain.save();
-
-    res.status(200).json(complain);
+    Complain.updateOne(
+      { _id: id },
+      {
+        $push: {
+          messages: {
+            messageText,
+            sender: req.user.id,
+            date: new Date().toISOString(),
+          },
+        },
+      }
+    );
   } catch (error) {
     console.log(error.message);
     console.log("Server error");

@@ -39,8 +39,9 @@ const AuthState = (prop) => {
   const getComplain = async (id) => {
     try {
       const res = await axios.get(`http://localhost:4000/api/complains/${id}`);
+      console.log(res.data);
 
-      dispatch({ type: GET_COMPLAIN, payload: res.data });
+      dispatch({ type: GET_COMPLAIN, payload: res.data.complain });
     } catch (error) {
       console.log(error.response.data.msg);
     }
@@ -48,16 +49,13 @@ const AuthState = (prop) => {
 
   // SEND MESSAGE
   const sendMessage = async (id, formData) => {
-    if (formData.messageText.trim() === "") {
-      alert("Input cannot be empty");
-      return;
-    }
-
     try {
       const res = await axios.patch(
         `http://localhost:4000/api/complains/${id}`,
         formData
       );
+
+      getComplain(id);
     } catch (error) {
       console.log(error.response.data.msg);
     }

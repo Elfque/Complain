@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
+import SmallMessages from "./SmallMessages";
 
 const Messages = () => {
   const authCon = useContext(AuthContext);
-  const { loadUser, getComplain, sendMessage, complain } = authCon;
+  const { loadUser, getComplain, sendMessage, complain, user } = authCon;
 
   const [messageContent, setMessageContent] = useState({
     messageText: "",
@@ -20,8 +20,19 @@ const Messages = () => {
   useEffect(() => {
     loadUser();
 
-    setTimeout(() => getComplain(id), 2000);
+    setTimeout(() => getComplain(id), 1000);
   }, []);
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    if (messageContent.messageText.trim() === "") {
+      alert("Input cannot be empty");
+      return;
+    }
+
+    sendMessage(id, messageContent);
+  };
 
   return (
     <div className="w-4/5 mx-auto">
@@ -37,7 +48,7 @@ const Messages = () => {
             <div className="issue">{complain && complain.complainText}</div>
           </div>
           <div className="messages mt-4">
-            <div>
+            {/* <div>
               <div className="sent  text-[11px] w-3/5 mb-4 bg-greeny p-2 rounded-[10px] text-white">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
                 esse aperiam vero quae laborum qui deleniti maiores incidunt ex
@@ -50,7 +61,18 @@ const Messages = () => {
                 esse aperiam vero quae laborum qui deleniti maiores incidunt ex
                 iusto.
               </div>
-            </div>
+            </div> */}
+            {complain.messages ? (
+              complain.messages.map((mess, idx) => (
+                <SmallMessages
+                  message={mess}
+                  key={idx}
+                  mine={mess.sender === user._id ? true : false}
+                />
+              ))
+            ) : (
+              <div className="text-center text-2xl">No messages</div>
+            )}
           </div>
 
           {/* FORM */}
@@ -58,13 +80,14 @@ const Messages = () => {
             <form
               action=""
               className="grid grid-cols-messageGrid gap-2 items-center p-4 bg-gray-100 absolute bottom-0 w-full"
-              onSubmit={() => sendMessage(id, messageContent)}
+              onSubmit={submit}
             >
               <input
                 type="text"
                 className="bg-greeny/30 rounded-[20px] outline-none text-sm px-8 py-2"
                 placeholder="Type your message here"
                 onChange={changing}
+                name="messageText"
               />
 
               <button

@@ -7,6 +7,7 @@ import {
   USER_LOADED,
   CLEAR_ERRORS,
   GET_COMPLAINS,
+  GET_COMPLAIN,
 } from "../type";
 
 export default (state, action) => {
@@ -56,8 +57,16 @@ export default (state, action) => {
     case GET_COMPLAINS:
       return {
         ...state,
+        complains: action.payload,
+      };
+      break;
+
+    case GET_COMPLAIN:
+      return {
+        ...state,
         complain: action.payload,
       };
+      break;
 
     default:
       return state;
