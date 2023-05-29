@@ -2,13 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import axios from "axios";
+import AlertContext from "../../Context/AlertContext/AlertContext";
+import Loader from "../layout/Loader";
+import Alert from "../layout/Alert";
 
 const SignIn = () => {
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
   const authCon = useContext(AuthContext);
+  const alertCon = useContext(AlertContext);
+  const { addAlert } = alertCon;
   const { authError, authSuccess, loadUser, isAuthenticated } = authCon;
+
   const changing = (e) =>
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
 
@@ -25,6 +33,7 @@ const SignIn = () => {
 
   const registerUse = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -39,8 +48,18 @@ const SignIn = () => {
       );
 
       if (res.data.msg === "Success") {
+        setLoading(false);
         authSuccess(res);
         navigate("/");
+      } else {
+        console.log(res);
+        setLoading(false);
+        if (
+          res.data.msg === "Invalid Email Address" ||
+          res.data.msg === "Invalid password"
+        ) {
+          addAlert(res.data.msg);
+        }
       }
     } catch (error) {
       authError(error);
@@ -53,6 +72,7 @@ const SignIn = () => {
         <form action="" className="form" onSubmit={registerUse}>
           <img src="/img/logo.png" alt="logo" className="w-3/5 mx-auto" />
           <div className="welcome">Welcome to Student Support</div>
+          <Alert />
           <input
             type="email"
             placeholder="Email"
@@ -67,10 +87,10 @@ const SignIn = () => {
             className="inp bg-greeny/10"
             onChange={changing}
           />
-          <div className="forgot text-[12px] text-end">Forgot Password?</div>
           <button type="submit" className="sign_btn">
-            Login
+            {loading ? <Loader /> : "Login"}
           </button>
+
           <div className="dont">
             Don't have an account?{" "}
             <Link to={"/signup"} className="text-greeny">

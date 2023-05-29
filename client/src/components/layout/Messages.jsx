@@ -34,6 +34,9 @@ const Messages = () => {
     }
 
     sendMessage(id, messageContent);
+    setMessageContent({
+      messageText: "",
+    });
   };
 
   return (
@@ -54,7 +57,7 @@ const Messages = () => {
             <div className="issue">{complain && complain.complainText}</div>
           </div>
           <div className="messages px-3 bg-whity h-full row-span-4">
-            {complain.messages && complain.messages.length > 0 ? (
+            {complain && complain.messages && complain.messages.length > 0 ? (
               complain.messages.map((mess, idx) => (
                 <SmallMessages
                   message={mess}
@@ -80,6 +83,7 @@ const Messages = () => {
                 placeholder="Type your message here"
                 onChange={changing}
                 name="messageText"
+                value={messageContent.messageText}
               />
 
               <button

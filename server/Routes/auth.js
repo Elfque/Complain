@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     if (!user) return res.status(400).json({ msg: "Invalid Email Address" });
 
     const compPass = await bcrypt.compare(password, user.password);
-    if (!compPass) return res.status(400).json({ msg: "Invalid Password" });
+    if (!compPass) return res.status(400).json({ msg: "Invalid password" });
 
     const token = jwt.sign({ id: user.id }, process.env.asiri, {
       expiresIn: "1d",

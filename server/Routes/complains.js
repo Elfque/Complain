@@ -18,7 +18,7 @@ router.post("/", middle, async (req, res) => {
 
     const savedComplain = await newComplain.save();
 
-    res.status(201).json({ msg: "Success" });
+    res.status(200).json({ msg: "Success" });
   } catch (error) {
     console.log(error.message);
     res.send("Server Error");
@@ -30,18 +30,18 @@ router.patch("/:id", middle, async (req, res) => {
   const { id } = req.params;
 
   try {
-    Complain.updateOne(
-      { _id: id },
-      {
-        $push: {
-          messages: {
-            messageText,
-            sender: req.user.id,
-            date: new Date().toISOString(),
-          },
-        },
-      }
-    );
+    const complain = await Complain.findById(id);
+
+    const newMessages = [
+      ...complain.messages,
+      { messageText, sender: req.user.id, date: new Date().toISOString() },
+    ];
+
+    complain.messages = newMessages;
+
+    const newCom = await complain.save();
+
+    res.status(200).json({ msg: "Success", newCom });
   } catch (error) {
     console.log(error.message);
     console.log("Server error");

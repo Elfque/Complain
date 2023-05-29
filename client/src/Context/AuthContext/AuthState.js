@@ -39,7 +39,6 @@ const AuthState = (prop) => {
   const getComplain = async (id) => {
     try {
       const res = await axios.get(`http://localhost:4000/api/complains/${id}`);
-      console.log(res.data);
 
       dispatch({ type: GET_COMPLAIN, payload: res.data.complain });
     } catch (error) {
@@ -50,9 +49,12 @@ const AuthState = (prop) => {
   // SEND MESSAGE
   const sendMessage = async (id, formData) => {
     try {
-      await axios.patch(`http://localhost:4000/api/complains/${id}`, formData);
+      const res = await axios.patch(
+        `http://localhost:4000/api/complains/${id}`,
+        formData
+      );
 
-      getComplain(id);
+      dispatch({ type: GET_COMPLAIN, payload: res.data.newCom });
     } catch (error) {
       console.log(error.response.data.msg);
     }

@@ -2,6 +2,9 @@ import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import AuthContext from "../../Context/AuthContext/AuthContext";
 import axios from "axios";
+import AlertContext from "../../Context/AlertContext/AlertContext";
+import Loader from "../layout/Loader";
+import Alert from "../layout/Alert";
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
@@ -10,8 +13,11 @@ const SignUp = () => {
     password: "",
     password1: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const authCon = useContext(AuthContext);
+  const alertCon = useContext(AlertContext);
+  const { addAlert } = alertCon;
   const { authError } = authCon;
   const navigate = useNavigate();
 
@@ -20,7 +26,7 @@ const SignUp = () => {
 
   const registerUser = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +41,12 @@ const SignUp = () => {
       );
       console.log(res);
       if (res.data.msg === "Success") {
+        setLoading(false);
         navigate("/");
+      } else {
+        if (res.data.msg === "Account already exists") {
+          addAlert(res.data.msg);
+        }
       }
     } catch (error) {
       authError(error);
@@ -48,6 +59,7 @@ const SignUp = () => {
         <form action="" className="form" onSubmit={registerUser}>
           <img src="/img/logo.png" alt="logo" className="w-3/5 mx-auto" />
           <div className="welcome">Welcome to Student Support</div>
+          <Alert />
           <input
             type="email"
             placeholder="Email"
@@ -69,7 +81,11 @@ const SignUp = () => {
             className="inp bg-greeny/10"
             onChange={changing}
           />
-          <button className="sign_btn">Sign In</button>
+
+          <button className="sign_btn">
+            {loading ? <Loader /> : "Sign In"}
+          </button>
+
           <div className="dont">
             Already a member?{" "}
             <Link to={"/signin"} className="text-greeny">

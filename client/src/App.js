@@ -9,25 +9,28 @@ import AdminDashboard from "./components/layout/AdminDashboard";
 import AddAdmin from "./components/layout/AddAdmin";
 import Student from "./components/layout/Student";
 import Confirm from "./components/layout/Confirm";
+import AlertState from "./Context/AlertContext/AlertState";
 
 function App() {
   return (
     <AuthState>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route exact path="/" element={<Dashboard />} />
-            <Route exact path="/signup" element={<SignUp />} />
-            <Route exact path="/signin" element={<SignIn />} />
-            <Route exact path="/makeacomplain" element={<ComplainForm />} />
-            <Route exact path="/complain/:id" element={<Messages />} />
-            <Route exact path="/admin" element={<AdminDashboard />} />
-            <Route exact path="/student" element={<Student />} />
-            <Route exact path="/addadmin" element={<AddAdmin />} />
-            <Route exact path="/confirm" element={<Confirm />} />
-          </Routes>
-        </div>
-      </Router>
+      <AlertState>
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route exact path="/" element={<Dashboard />} />
+              <Route exact path="/signup" element={<SignUp />} />
+              <Route exact path="/signin" element={<SignIn />} />
+              <Route exact path="/makeacomplain" element={<ComplainForm />} />
+              <Route exact path="/complain/:id" element={<Messages />} />
+              <Route exact path="/admin" element={<AdminDashboard />} />
+              <Route exact path="/student" element={<Student />} />
+              <Route exact path="/addadmin" element={<AddAdmin />} />
+              <Route exact path="/confirm" element={<Confirm />} />
+            </Routes>
+          </div>
+        </Router>
+      </AlertState>
     </AuthState>
   );
 }

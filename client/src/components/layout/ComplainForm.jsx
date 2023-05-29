@@ -2,27 +2,37 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import AuthContext from "../../Context/AuthContext/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const ComplainForm = () => {
   const authCon = useContext(AuthContext);
-  const { loadUser } = authCon;
+  const { loadUser, isAuthenticated } = authCon;
+
   const [complainDetails, setComplainDetails] = useState({
     complainText: "",
     level: 0,
     category: "Lack of Electricity",
   });
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUser();
+
+    setTimeout(() => {
+      if (!isAuthenticated) navigate("/signin");
+    }, 2000);
     // eslint-disable-next-line
   }, []);
 
   const changing = (e) =>
     setComplainDetails({ ...complainDetails, [e.target.name]: e.target.value });
 
-  const sendComplain = (e) => {
+  const sendComplain = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (complainDetails.complainText.trim() === "") {
       alert("Complain cannot be empty");
@@ -30,13 +40,18 @@ const ComplainForm = () => {
     }
 
     try {
-      const res = axios.post(
+      const res = await axios.post(
         "http://localhost:4000/api/complains",
         complainDetails
       );
 
-      if (res.data) {
-        console.log("Success");
+      if (res.data.msg === "Success") {
+        setLoading(false);
+        setComplainDetails({
+          level: 0,
+          complainText: "",
+          category: "Lack Of Electricity",
+        });
       }
     } catch (error) {
       console.log(error.response.msg);
@@ -72,7 +87,7 @@ const ComplainForm = () => {
               Category*
             </label>
             <select
-              name="complainType"
+              name="category"
               id=""
               onChange={changing}
               className="outline-none px-2 text-sm py-1 block border border-greyey/70 w-full mt-1"
@@ -94,6 +109,7 @@ const ComplainForm = () => {
               className="outline-none px-2 text-sm py-1 block border border-greyey/70 w-full mt-1"
               name="level"
               onChange={changing}
+              value={complainDetails.level}
             />
           </div>
           <div className="control col-span-6">
@@ -106,13 +122,15 @@ const ComplainForm = () => {
               className="outline-none px-2 text-sm py-1 block border border-greyey/70 w-full h-32 resize-none mt-1"
               placeholder="Please provide as much detail as possible."
               onChange={changing}
+              value={complainDetails.complainText}
             ></textarea>
           </div>
+
           <button
             type="submit"
             className="bg-greeny text-white py-2 px-8 col-span-2"
           >
-            Send
+            {loading ? <Loader /> : "Send"}
           </button>
         </form>
       </div>

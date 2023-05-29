@@ -10,7 +10,7 @@ const Complain = ({ complain }) => {
   return (
     <Link
       to={`/complain/${complain._id}`}
-      className="grid grid-cols-10 gap-2 text-[12px] px-3 text-blackt my-2"
+      className="grid grid-cols-10 gap-2 text-[12px] px-3 text-blackt py-2 hover:bg:greeny/20"
     >
       <div className="id w-full truncate text-greeny">{complain._id}</div>
       <div className="category col-span-2 w-full truncate">
