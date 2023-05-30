@@ -7,7 +7,7 @@ import Loader from "../layout/Loader";
 import Alert from "../layout/Alert";
 
 const SignIn = () => {
-  const [userDetails, setUserDetails] = useState({ email: "", password: "" });
+  const [userDetails, setUserDetails] = useState({ matric: "", password: "" });
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -74,9 +74,9 @@ const SignIn = () => {
           <div className="welcome">Welcome to Student Support</div>
           <Alert />
           <input
-            type="email"
-            placeholder="Email"
-            name="email"
+            type="text"
+            placeholder="Matric Number"
+            name="matric"
             className="inp border-greeny"
             onChange={changing}
           />

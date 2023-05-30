@@ -22,6 +22,9 @@ const Messages = () => {
 
     getComplain(id);
 
+    // if(user && user.adminLevel < 3){
+
+    // }
     // eslint-disable-next-line
   }, []);
 
@@ -53,8 +56,11 @@ const Messages = () => {
           ""
         )}
         <div className="main_message w-[500px] sm:max-w-[400px] h-[70vh] relative grid grid-rows-6">
-          <div className="top rounded-t-md bg-greeny p-2 text-sm text-white h-full">
-            <div className="issue">{complain && complain.complainText}</div>
+          <div className="top rounded-t-md bg-greeny p-2 text-sm text-white h-full flex justify-center items-center">
+            <div className="issue text-xl">
+              {/* {user && user.adminLevel > 2 ? "Complain Management System" : ""} */}
+              Complain Management System
+            </div>
           </div>
           <div className="messages px-3 bg-whity h-full row-span-4">
             {complain && complain.messages && complain.messages.length > 0 ? (
@@ -66,7 +72,9 @@ const Messages = () => {
                 />
               ))
             ) : (
-              <div className="text-center text-2xl">No messages</div>
+              <div className="text-center text-xl text-gray-500">
+                No messages
+              </div>
             )}
           </div>
 
@@ -84,6 +92,7 @@ const Messages = () => {
                 onChange={changing}
                 name="messageText"
                 value={messageContent.messageText}
+                required
               />
 
               <button

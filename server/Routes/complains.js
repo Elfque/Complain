@@ -4,6 +4,7 @@ const middle = require("../middleware/middle");
 
 const router = express.Router();
 
+// SEND COMPLAINS
 router.post("/", middle, async (req, res) => {
   const { id } = req.user;
   const { complainText, category, level } = req.body;
@@ -25,6 +26,7 @@ router.post("/", middle, async (req, res) => {
   }
 });
 
+// SEND MESSAGE
 router.patch("/:id", middle, async (req, res) => {
   const { messageText } = req.body;
   const { id } = req.params;
@@ -48,6 +50,7 @@ router.patch("/:id", middle, async (req, res) => {
   }
 });
 
+// GET COMPLAIN FOR USERS
 router.get("/", middle, async (req, res) => {
   const { id } = req.user;
 
@@ -61,6 +64,7 @@ router.get("/", middle, async (req, res) => {
   }
 });
 
+//GET A PARTICULAR COMPLAIN
 router.get("/:id", middle, async (req, res) => {
   const { id } = req.params;
 

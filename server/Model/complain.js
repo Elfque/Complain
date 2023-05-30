@@ -5,7 +5,6 @@ const ComplainSchema = mongoose.Schema(
     complainText: {
       type: String,
       required: true,
-      unique: true,
     },
     category: {
       type: String,

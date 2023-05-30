@@ -6,14 +6,15 @@ const middle = require("../middleware/middle");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { email, password, adminLevel } = req.body;
+  const { matric, name, password, adminLevel } = req.body;
   try {
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ matric });
 
     if (user) return res.status(400).json({ msg: "Account already exists" });
 
     user = new User({
-      email,
+      matric,
+      name,
       password,
       adminLevel,
     });
@@ -42,4 +43,18 @@ router.get("/", middle, async (req, res) => {
   }
 });
 
+// GET COMPLAINANT BY ID
+router.get("/:id", middle, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    const { matric } = user;
+
+    res.status(200).json(matric);
+  } catch (error) {
+    res.json({ msg: error.msg });
+  }
+});
 module.exports = router;

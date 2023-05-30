@@ -7,6 +7,10 @@ const SmallMessages = ({ message, mine }) => {
         } p-2 rounded-[10px]`}
       >
         {message.messageText}
+        <div className="time">
+          {new Date(message.date).getHours()} :{" "}
+          {new Date(message.date).getMinutes()}
+        </div>
       </div>
     </div>
   );

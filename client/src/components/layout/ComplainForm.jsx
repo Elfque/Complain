@@ -32,12 +32,12 @@ const ComplainForm = () => {
 
   const sendComplain = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     if (complainDetails.complainText.trim() === "") {
       alert("Complain cannot be empty");
       return;
     }
+    setLoading(true);
 
     try {
       const res = await axios.post(

@@ -7,12 +7,12 @@ require("dotenv").config();
 const middle = require("../middleware/middle");
 
 router.post("/", async (req, res) => {
-  const { email, password } = req.body;
+  const { matric, password } = req.body;
 
   try {
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ matric });
 
-    if (!user) return res.status(400).json({ msg: "Invalid Email Address" });
+    if (!user) return res.status(400).json({ msg: "Invalid Matric Number" });
 
     const compPass = await bcrypt.compare(password, user.password);
     if (!compPass) return res.status(400).json({ msg: "Invalid password" });

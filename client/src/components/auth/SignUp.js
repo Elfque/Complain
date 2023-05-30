@@ -8,11 +8,13 @@ import Alert from "../layout/Alert";
 
 const SignUp = () => {
   const [userDetails, setUserDetails] = useState({
-    email: "",
+    matric: "",
+    name: "",
     adminLevel: 3,
     password: "",
     password1: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const authCon = useContext(AuthContext);
@@ -61,9 +63,16 @@ const SignUp = () => {
           <div className="welcome">Welcome to Student Support</div>
           <Alert />
           <input
-            type="email"
-            placeholder="Email"
-            name="email"
+            type="text"
+            placeholder="Matric Number"
+            name="matric"
+            className="inp border-greeny"
+            onChange={changing}
+          />
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
             className="inp border-greeny"
             onChange={changing}
           />

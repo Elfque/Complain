@@ -26,11 +26,10 @@ const Student = () => {
         <div className="text-greeny text-sm mb-4">
           Here are the complains you have made so far
         </div>
-        <div className="grid grid-cols-12 gap-2 bg-whiter text-sm text-greeny px-3 py-1">
+        <div className="grid grid-cols-10 gap-2 bg-whiter text-sm text-greeny px-3 py-1">
           <div className="id">id</div>
           <div className="id col-span-2">Category</div>
           <div className="id col-span-5">Complain</div>
-          <div className="id col-span-2">Status</div>
           <div className="id col-span-2">Date</div>
         </div>
         <div className="main_com">
