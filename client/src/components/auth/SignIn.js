@@ -52,7 +52,6 @@ const SignIn = () => {
         authSuccess(res);
         navigate("/");
       } else {
-        console.log(res);
         setLoading(false);
         if (
           res.data.msg === "Invalid Email Address" ||
@@ -75,7 +74,7 @@ const SignIn = () => {
           <Alert />
           <input
             type="text"
-            placeholder="Matric Number"
+            placeholder="Login ID"
             name="matric"
             className="inp border-greeny"
             onChange={changing}

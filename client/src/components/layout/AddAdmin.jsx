@@ -5,7 +5,11 @@ import AuthContext from "../../Context/AuthContext/AuthContext";
 import Navbar from "./Navbar";
 
 const AddAdmin = () => {
-  const [userDetails, setUserDetails] = useState({ email: "", password: "" });
+  const [userDetails, setUserDetails] = useState({
+    matric: "",
+    password: "",
+    adminLevel: 2,
+  });
 
   const navigate = useNavigate();
   const authCon = useContext(AuthContext);
@@ -23,7 +27,7 @@ const AddAdmin = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/auth",
+        "http://localhost:4000/api/user",
         userDetails,
         config
       );
@@ -51,9 +55,9 @@ const AddAdmin = () => {
                 Login ID
               </label>
               <input
-                type="email"
+                type="text"
                 placeholder="Email"
-                name="email"
+                name="matric"
                 className="inp border-gray-500/70"
                 onChange={changing}
               />

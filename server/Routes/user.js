@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { matric, name, password, adminLevel } = req.body;
+
   try {
     let user = await User.findOne({ matric });
 
@@ -18,6 +19,7 @@ router.post("/", async (req, res) => {
       password,
       adminLevel,
     });
+
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 

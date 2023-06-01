@@ -4,12 +4,11 @@ const UsersSchema = mongoose.Schema(
   {
     matric: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
     },
     name: {
       type: String,
-      required: true,
     },
     password: {
       type: String,
@@ -17,7 +16,6 @@ const UsersSchema = mongoose.Schema(
     },
     adminLevel: {
       type: Number,
-      required: true,
     },
   },
   { timestamps: true }

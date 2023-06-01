@@ -52,6 +52,7 @@ const ComplainForm = () => {
           complainText: "",
           category: "Lack Of Electricity",
         });
+        navigate("/student");
       }
     } catch (error) {
       console.log(error.response.msg);
