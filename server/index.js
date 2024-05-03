@@ -16,3 +16,6 @@ app.use("/api/adminComplains", require("./Routes/complain"));
 
 const PORT = Number(process.env.PORT) || 4000;
 app.listen(PORT, () => console.log(`Server started on Port ${PORT}`));
+
+const url =
+  "mongodb+srv://faruqadeyemi70:WgFthf9gZWLN1TWQ@rays.b5masjk.mongodb.net/";

@@ -2,23 +2,18 @@ const mongoose = require("mongoose");
 
 const UsersSchema = mongoose.Schema(
   {
-    matric: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    name: {
+    username: {
       type: String,
     },
     password: {
       type: String,
       required: true,
     },
-    adminLevel: {
-      type: Number,
+    accountType: {
+      type: String,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("user", UsersSchema);
+module.exports = mongoose.model("student", UsersSchema);

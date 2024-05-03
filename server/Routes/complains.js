@@ -31,6 +31,7 @@ router.patch("/:id", middle, async (req, res) => {
   const { messageText } = req.body;
   const { id } = req.params;
 
+  console.log(messageText);
   try {
     const complain = await Complain.findById(id);
 
