@@ -22,7 +22,12 @@ router.post("/", async (req, res) => {
     });
 
     delete user.password;
-    res.status(200).json({ msg: "Success", token, userId: user._id });
+    res.status(200).json({
+      msg: "Success",
+      token,
+      userId: user._id,
+      accountType: user.accountType,
+    });
   } catch (error) {
     console.log(error.message);
     res.send("Server Error");

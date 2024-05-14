@@ -6,18 +6,19 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
+// CREATE STUDENT
 router.post("/", async (req, res) => {
-  const { username, password, accountType } = req.body;
+  const { matric, username, password, accountType } = req.body;
 
   try {
     let user = await User.findOne({ username });
+    let userMatric = await User.findOne({ matric });
 
-    if (user) return res.status(400).json({ msg: "Account already exists" });
+    if (user || userMatric)
+      return res.status(400).json({ msg: "Account already exists" });
 
     user = new User({
-      username,
-      password,
-      accountType,
+      ...req.body,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -29,7 +30,40 @@ router.post("/", async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.status(201).json({ msg: "Success", token, userId: savedUser._id });
+    res
+      .status(201)
+      .json({ msg: "Success", token, userId: savedUser._id, accountType });
+  } catch (error) {
+    console.log(error.message);
+    res.send("Server Error");
+  }
+});
+
+// CREATE ADMIN
+router.post("/admin", async (req, res) => {
+  const { username, password, accountType } = req.body;
+
+  try {
+    let user = await User.findOne({ username });
+
+    if (user) return res.status(400).json({ msg: "Account already exists" });
+
+    user = new User({
+      ...req.body,
+    });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    const savedUser = await user.save();
+
+    const token = jwt.sign({ id: user.id }, process.env.asiri, {
+      expiresIn: "1d",
+    });
+
+    res
+      .status(201)
+      .json({ msg: "Success", token, userId: savedUser._id, accountType });
   } catch (error) {
     console.log(error.message);
     res.send("Server Error");

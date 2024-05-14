@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const UsersSchema = mongoose.Schema(
   {
+    matric: {
+      type: String,
+    },
     username: {
       type: String,
     },
