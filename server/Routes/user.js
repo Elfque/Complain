@@ -6,16 +6,15 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-// CREATE STUDENT
+// CREATE USER
 router.post("/", async (req, res) => {
   const { matric, username, password, accountType } = req.body;
 
   try {
     let user = await User.findOne({ username });
-    let userMatric = await User.findOne({ matric });
+    // let userMatric = await User.findOne({ matric });
 
-    if (user || userMatric)
-      return res.status(400).json({ msg: "Account already exists" });
+    if (user) return res.status(400).json({ msg: "Account already exists" });
 
     user = new User({
       ...req.body,
@@ -83,18 +82,19 @@ router.get("/", middle, async (req, res) => {
   }
 });
 
-// GET COMPLAINANT BY ID
-router.get("/:id", middle, async (req, res) => {
-  const { id } = req.params;
+// // GET COMPLAINANT BY ID
+// router.get("/:id", middle, async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const user = await User.findById(id);
+//   try {
+//     const user = await User.findById(id);
 
-    const { matric } = user;
+//     const { matric } = user;
 
-    res.status(200).json(matric);
-  } catch (error) {
-    res.json({ msg: error.msg });
-  }
-});
+//     res.status(200).json(matric);
+//   } catch (error) {
+//     res.json({ msg: error.msg });
+//   }
+// });
+
 module.exports = router;

@@ -37,9 +37,9 @@ router.post("/", async (req, res) => {
 // GET USER
 router.get("/", middle, async (req, res) => {
   const { id } = req.user;
+
   try {
     let user = await User.findById(id);
-
     user.password = "";
     res.status(200).json({ user });
   } catch (err) {

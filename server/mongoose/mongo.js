@@ -6,8 +6,6 @@ const url =
   "mongodb+srv://rayz:mzta@rayz.xrdnn5i.mongodb.net/?retryWrites=true&w=majority&appName=Rayz";
 
 const connectMongo = async () => {
-  // console.log(process.env.mongoUrl.slice(-1));
-
   try {
     await mongoose.connect(url, {
       useNewURLParser: true,

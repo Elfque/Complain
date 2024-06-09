@@ -9,7 +9,7 @@ router.get("/", middle, async (req, res) => {
 
     res.status(200).json(complain);
   } catch (error) {
-    console.error(error.message);
+    // console.error(error.message);
     res.status(500).json({ msg: "Server Error" });
   }
 });
