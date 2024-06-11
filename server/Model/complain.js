@@ -14,10 +14,12 @@ const ComplainSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    complainant: {
-      type: String,
-      required: true,
-    },
+    complainant: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
     level: {
       type: String,
       required: true,

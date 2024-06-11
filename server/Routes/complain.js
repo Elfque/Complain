@@ -5,7 +5,9 @@ const middle = require("../middleware/middle");
 
 router.get("/", middle, async (req, res) => {
   try {
-    const complain = await Complain.find({}).sort({ updatedAt: -1 });
+    const complain = await Complain.find({})
+      .sort({ updatedAt: -1 })
+      .populate("complainant", "-password");
 
     res.status(200).json(complain);
   } catch (error) {

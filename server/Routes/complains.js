@@ -17,7 +17,8 @@ router.post("/", middle, async (req, res) => {
       complainant: id,
     });
 
-    const savedComplain = await newComplain.save();
+    let savedComplain = await newComplain.save();
+    savedComplain = await savedComplain.populate("complainant", "userame");
 
     res.status(200).json({ msg: "Success" });
   } catch (error) {
